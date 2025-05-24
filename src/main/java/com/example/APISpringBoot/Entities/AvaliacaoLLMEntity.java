@@ -13,10 +13,10 @@ import lombok.Setter;
 public class AvaliacaoLLMEntity {
     @Id
     private String id;
-    private String llm;
+    private String model;
     private LocalDateTime data;
-    private int avaliacaoGeral;
-    private String comentario;
+    private double AvaliacaoMedia;
+    private String feedback;
     private List<ParametroAvaliativo> parametros;
 
 }

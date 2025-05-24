@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.APISpringBoot.Entities.AvaliacaoLLMEntity;
+import com.example.APISpringBoot.Entities.ParametroAvaliativo;
 import com.example.APISpringBoot.Repository.mongoRepository.AvaliacaoRepository;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,17 @@ public class AvaliacaoController {
     @PostMapping
     public AvaliacaoLLMEntity criarAvaliacao(@RequestBody AvaliacaoLLMEntity avaliacao) {
         avaliacao.setData(LocalDateTime.now());
+
+       List<ParametroAvaliativo> parametros = avaliacao.getParametros();
+
+        double somaNotas = 0;
+        for (ParametroAvaliativo parametro : parametros) {
+            somaNotas += parametro.getNota();
+        }
+        double mediaNotas = parametros.isEmpty() ? 0 : somaNotas / parametros.size();
+        avaliacao.setAvaliacaoMedia(mediaNotas);
+
+
         return repository.save(avaliacao);
     }
 
@@ -27,9 +39,9 @@ public class AvaliacaoController {
         return repository.findAll();
     }
 
-    @GetMapping("/{llm}")
+    @GetMapping("/{model}")
     public List<AvaliacaoLLMEntity> buscarPorLlm(@PathVariable String llm) {
-        return repository.findByLlm(llm);
+        return repository.findByModel(llm);
     }
 
     @GetMapping("/id/{id}")

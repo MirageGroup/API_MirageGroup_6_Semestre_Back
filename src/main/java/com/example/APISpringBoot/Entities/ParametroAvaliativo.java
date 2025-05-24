@@ -8,7 +8,5 @@ import lombok.Setter;
 public class ParametroAvaliativo {
     private String nome;
     private int nota;
-    private String comentario;
-
     // getters e setters
 }
