@@ -13,6 +13,7 @@ import lombok.Setter;
 public class AvaliacaoLLMEntity {
     @Id
     private String id;
+    private String idResposta;
     private String model;
     private LocalDateTime data;
     private double AvaliacaoMedia;
