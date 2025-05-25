@@ -20,6 +20,7 @@ public class AvaliacaoLLMEntity {
     private String feedback;
     private List<ParametroAvaliativo> parametros;
     private double tempoRespostaMs;
+    private String uuid;
 
 public double  getTempoRespostaMs() {
     return tempoRespostaMs;
