@@ -39,9 +39,12 @@ public class AvaliacaoController {
         return repository.findAll();
     }
 
-    @GetMapping("/{model}")
-    public List<AvaliacaoLLMEntity> buscarPorLlm(@PathVariable String llm) {
-        return repository.findByModel(llm);
+
+
+    @GetMapping("/{uuid}")
+    public List<AvaliacaoLLMEntity> buscarPorLlm(@PathVariable String uuid) {
+        return repository.findByUuid(uuid);
+
     }
 
     @GetMapping("/id/{id}")
