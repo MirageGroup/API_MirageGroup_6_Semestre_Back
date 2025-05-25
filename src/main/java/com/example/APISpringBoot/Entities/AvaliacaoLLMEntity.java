@@ -9,14 +9,32 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Document(collection = "avaliacoes")
+@Document(collection = "llm_comparisons")
 public class AvaliacaoLLMEntity {
     @Id
     private String id;
+    private String idResposta;
     private String model;
     private LocalDateTime data;
     private double AvaliacaoMedia;
     private String feedback;
     private List<ParametroAvaliativo> parametros;
+    private double tempoRespostaMs;
+
+public double  getTempoRespostaMs() {
+    return tempoRespostaMs;
+}
+
+public void setTempoRespostaMs(double  tempoRespostaMs) {
+    this.tempoRespostaMs = tempoRespostaMs;
+}
+public String getModelo() {
+    return model;
+}
+
+public void setModelo(String modelo) {
+    this.model = modelo;
+}
 
 }
+
