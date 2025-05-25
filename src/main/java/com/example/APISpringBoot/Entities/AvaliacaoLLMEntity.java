@@ -19,4 +19,22 @@ public class AvaliacaoLLMEntity {
     private String feedback;
     private List<ParametroAvaliativo> parametros;
 
+    private long tempoRespostaMs;
+
+public long getTempoRespostaMs() {
+    return tempoRespostaMs;
 }
+
+public void setTempoRespostaMs(long tempoRespostaMs) {
+    this.tempoRespostaMs = tempoRespostaMs;
+}
+public String getModelo() {
+    return model;
+}
+
+public void setModelo(String modelo) {
+    this.model = modelo;
+}
+
+}
+

@@ -47,4 +47,5 @@ public class ChatController {
                 .bodyToMono(String.class)
                 .map(response -> response);
     }
+    
 }
