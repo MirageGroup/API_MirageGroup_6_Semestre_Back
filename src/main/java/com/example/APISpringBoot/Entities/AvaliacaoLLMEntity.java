@@ -9,10 +9,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Document(collection = "avaliacoes")
+@Document(collection = "llm_comparisons")
 public class AvaliacaoLLMEntity {
     @Id
     private String id;
+    private String idResposta;
     private String model;
     private LocalDateTime data;
     private double AvaliacaoMedia;
