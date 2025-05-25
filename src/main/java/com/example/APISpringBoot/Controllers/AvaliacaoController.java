@@ -14,14 +14,13 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/avaliacoes")
 public class AvaliacaoController {
 
     @PostMapping
-public AvaliacaoLLMEntity criarAvaliacao(@RequestBody AvaliacaoLLMEntity avaliacao) {
+    public AvaliacaoLLMEntity criarAvaliacao(@RequestBody AvaliacaoLLMEntity avaliacao) {
     avaliacao.setData(LocalDateTime.now());
 
     List<ParametroAvaliativo> parametros = avaliacao.getParametros();
@@ -49,39 +48,6 @@ public AvaliacaoLLMEntity criarAvaliacao(@RequestBody AvaliacaoLLMEntity avaliac
         this.predictApiUrl = dotenv.get("LLM_ENDPOINT");
     }
 
-    @PostMapping(path = "/input")
-    public Mono<String> postMethodName(@RequestBody ChatDTO request) {
-        String text = request.getText();
-
-        Map<String, String> jsonRequest = new HashMap<>();
-        jsonRequest.put("llm_model", "model1");
-        jsonRequest.put("text", text);
-
-        long start = System.currentTimeMillis();
-
-        return webClientBuilder.build()
-                .post()
-                .uri(predictApiUrl)
-                .bodyValue(jsonRequest)
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(response -> {
-                    long end = System.currentTimeMillis();
-                    long tempoResposta = end - start;
-
-                    AvaliacaoLLMEntity avaliacao = new AvaliacaoLLMEntity();
-                    avaliacao.setModel("model1");
-                    avaliacao.setData(LocalDateTime.now());
-                    avaliacao.setFeedback(response);
-                    avaliacao.setAvaliacaoMedia(0); // você pode calcular se necessário
-                    avaliacao.setTempoRespostaMs(tempoResposta);
-                    avaliacao.setParametros(null); // ou ajuste se necessário
-
-                    repository.save(avaliacao);
-
-                    return response;
-                });
-    }
 
     @GetMapping
     public List<AvaliacaoLLMEntity> listarAvaliacoes() {
@@ -98,21 +64,5 @@ public AvaliacaoLLMEntity criarAvaliacao(@RequestBody AvaliacaoLLMEntity avaliac
         return repository.findById(id).orElse(null);
     }
 
-    @GetMapping("/tempo-resposta")
-    public List<Map<String, Object>> tempoRespostaPorModelo() {
-        List<AvaliacaoLLMEntity> avaliacoes = repository.findAll();
 
-        return avaliacoes.stream()
-                .collect(Collectors.groupingBy(AvaliacaoLLMEntity::getModelo))
-                .entrySet().stream()
-                .map(entry -> {
-                    String modelo = entry.getKey();
-                    List<AvaliacaoLLMEntity> lista = entry.getValue();
-                    double media = lista.stream().mapToLong(AvaliacaoLLMEntity::getTempoRespostaMs).average().orElse(0);
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("modelo", modelo);
-                    map.put("tempoMedioMs", media);
-                    return map;
-                }).collect(Collectors.toList());
-    }
 }

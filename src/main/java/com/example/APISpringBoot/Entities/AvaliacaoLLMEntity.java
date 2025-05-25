@@ -18,14 +18,13 @@ public class AvaliacaoLLMEntity {
     private double AvaliacaoMedia;
     private String feedback;
     private List<ParametroAvaliativo> parametros;
+    private double tempoRespostaMs;
 
-    private long tempoRespostaMs;
-
-public long getTempoRespostaMs() {
+public double  getTempoRespostaMs() {
     return tempoRespostaMs;
 }
 
-public void setTempoRespostaMs(long tempoRespostaMs) {
+public void setTempoRespostaMs(double  tempoRespostaMs) {
     this.tempoRespostaMs = tempoRespostaMs;
 }
 public String getModelo() {
