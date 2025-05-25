@@ -1,11 +1,13 @@
 package com.example.APISpringBoot.Repository.mongoRepository;
 
-import java.util.List;
-
+import com.example.APISpringBoot.Entities.AvaliacaoLLMEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.example.APISpringBoot.Entities.AvaliacaoLLMEntity;
+import java.util.List;
 
 public interface AvaliacaoRepository extends MongoRepository<AvaliacaoLLMEntity, String> {
-    List<AvaliacaoLLMEntity> findByModel(String model);
+
+    // This is the correct method
+    List<AvaliacaoLLMEntity> findByUuid(String uuid);
 }
+

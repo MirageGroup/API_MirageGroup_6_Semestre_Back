@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ParametroAvaliativo {
-    private String nome;
+    private String criterio;
     private int nota;
-    // getters e setters
 }
